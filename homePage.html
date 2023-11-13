@@ -15,6 +15,33 @@
     </section>
     <section hidden id="user">
         <h2>Hello <span class="username"></span>!</h2>
+
+        <h3>Post a Fragment</h3>
+        <label for="type">Choose a type:</label>
+        <select name="type" id="type">
+            <option value="text/plain">text/plain</option>
+            <option value="text/markdown">text/markdown</option>
+            <option value="text/html">text/html</option>
+            <option value="application/json">application/JSON</option>
+        </select>
+        <br />
+        <label for="content">Enter Data:</label>
+        <input type="text" id="content" name="content" /><br /><br />
+        <label for="file" id="filelable" name="file">File Upload</label>
+        <input type="file" id="file" name="file" /> <br /><br />
+        <button id="post">POST</button>
+        <br />
+        <br />
+        <h3>Get a Fragment</h3>
+        <label for="get_id">Enter ID For Get:</label>
+        <input type="text" id="get_id" name="get_id" /><br /><br />
+        <button id="getbyid">GET BY ID</button>
+        <button id="getInfo">GET BY ID INFO</button>
+        <button id="getall">GET ALL</button>
+        <br />
+        <code id="content-type" name="content-type"></code>
+        <br />
+        <table class="fragmentList"></table>
     </section>
 </body>
 
