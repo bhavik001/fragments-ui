@@ -19,6 +19,14 @@ async function init() {
   const content = document.querySelector("#content");
   const contentType = document.querySelector("#type");
   const fileUpload = document.querySelector("#file");
+  const fragments_id = document.querySelector("#fragments_id");
+  const deleteButton = document.querySelector("#delete");
+  const fragment_id = document.querySelector("#fragment_id");
+  const upd_content = document.querySelector("#upd_content");
+  const putButton = document.querySelector("#update");
+  const get_id = document.querySelector("#get_id");
+  const getById = document.querySelector("#getbyid");
+  const infoData = document.querySelector("#content-type");
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -93,6 +101,80 @@ async function init() {
     }
   };
 
+  getButton.onclick = async () => {
+    // Get a fragment from the fragments API server
+    let fragmentHtml = "";
+    let fragmentList = document.querySelector(".fragmentList");
+    fragmentList.innerHTML = "";
+    getUserFragments(user).then((data) => {
+      if (data.length) {
+        // Create the titles for each column and add to the table
+        let header = document.createElement("tr");
+        let headerOptions = ["Id", "Created", "Updated", "Type"];
+        for (let column of headerOptions) {
+          let th = document.createElement("th");
+          th.append(column);
+          header.appendChild(th);
+        }
+        fragmentList.appendChild(header);
+
+        for (let fragment of data) {
+          console.log("fragment", fragment);
+
+          let tr = document.createElement("tr");
+          let id = document.createElement("td");
+          let created = document.createElement("td");
+          let updated = document.createElement("td");
+          let type = document.createElement("td");
+
+          id.append(fragment.id);
+          created.append(fragment.created);
+          updated.append(fragment.updated);
+          type.append(fragment.type);
+          tr.append(id, created, updated, type);
+
+          fragmentList.appendChild(tr);
+        }
+      } else {
+        let td = document.createElement("td");
+        td.append("No fragments were found");
+
+        fragmentList.append(td);
+      }
+    });
+    fragmentList.html = fragmentHtml;
+  };
+  getById.onclick = async () => {
+    var res = await getFragment(user, get_id.value);
+    if (res instanceof Blob) {
+      const image = document.createElement("img");
+      image.src = URL.createObjectURL(res);
+      infoData.innerHTML = "";
+      infoData.appendChild(image);
+    } else {
+      infoData.innerHTML = res;
+    }
+  };
+  getInfo.onclick = async () => {
+    var res = await getFragmentMeta(user, get_id.value);
+    if (res instanceof Blob) {
+      const image = document.createElement("img");
+      image.src = URL.createObjectURL(res);
+      infoData.appendChild(image);
+    }
+    infoData.innerHTML = JSON.stringify(res);
+  };
+  deleteButton.onclick = () => {
+    deleteFragment(user, fragments_id.value);
+  };
+  putButton.onclick = async () => {
+    putFragment(
+      user,
+      fragment_id.value,
+      contentType.options[contentType.selectedIndex].value,
+      upd_content.value
+    );
+  };
 }
 
 // Wait for the DOM to be ready, then start the app
