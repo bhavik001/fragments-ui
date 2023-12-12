@@ -27,7 +27,7 @@ export async function getUserFragments(user) {
 }
 
 export async function postFragments(user, type, content) {
-  console.log("Post fragments data...");
+  console.log("Post fragments data..");
   try {
     const res = await fetch(`${apiUrl}/v1/fragments`, {
       method: "POST",

@@ -13,6 +13,7 @@ import {
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector("#user");
+  const getButton = document.querySelector("#getall");
   const loginBtn = document.querySelector("#login");
   const logoutBtn = document.querySelector("#logout");
   const postButton = document.querySelector("#post");
